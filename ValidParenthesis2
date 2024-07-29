@@ -1,0 +1,32 @@
+package org.example;
+
+
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class ValidParenthesis {
+    public static void main(String[] arg) {
+        String s = "{]}{}[[{}]";
+        System.out.println(validParenthesis(s));
+    }
+
+    public static String validParenthesis(String s) {
+        String valid = "";
+        Map<Character, Long> charVsCount = s.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(charVsCount);
+        Long OcurlCount = charVsCount.getOrDefault('{',0L);
+        Long CCurlcount = charVsCount.getOrDefault('}',0L);
+        Long OCount = charVsCount.getOrDefault(']',0L);
+        Long Ccount = charVsCount.getOrDefault('[',0L);
+        Long OBCount = charVsCount.getOrDefault('(',0L);
+        Long CBcount = charVsCount.getOrDefault(')',0L);
+        if (OcurlCount.compareTo(CCurlcount) != 0 || OCount.compareTo(Ccount) != 0 || OBCount.compareTo(CBcount) != 0) {
+            valid = "Not Valid";
+        } else {
+            valid = "Valid";
+        }
+        return valid;
+    }
+}
+//Timecomplexity :O(n)
